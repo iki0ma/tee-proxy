@@ -1,6 +1,14 @@
 [build]
-command = "pnpm build:netlify"
-publish = ".netlify"
-edge_functions = ".netlify/functions"
-[functions]
-  directory = ".netlify/functions"
+  functions = "functions/"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/proxy/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS, PUT, DELETE"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With"
